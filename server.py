@@ -22,7 +22,6 @@ def create_app(config):
     app = Flask(__name__)
     app.secret_key = 'something_special'
     app.config["TESTING"] = config.get("TESTING")
-    return app
 
     @app.route('/')
     def index():
