@@ -22,7 +22,6 @@ def create_app(config):
     app = Flask(__name__)
     app.secret_key = 'something_special'
     app.config["TESTING"] = config.get("TESTING")
-    return app
 
     @app.route('/')
     def index():
@@ -30,10 +29,21 @@ def create_app(config):
 
     @app.route('/show_summary', methods=['POST'])
     def show_summary():
-        club = [club for club in clubs if club['email'] == request.form['email']
-                ][0]
-        return render_template(
-            'welcome.html', club=club, competitions=competitions)
+        """ function that permits the authentification of a user"""
+        if request.form['email'] == "":
+            flash("Email vide, veuillez ressaisir un email")
+            return render_template('index.html')
+        clubs_list = []
+        for club in clubs:
+            if club['email'] == request.form['email']:
+                clubs_list.append(club)
+                return render_template(
+                    'welcome.html',
+                    club=club,
+                    competitions=competitions)
+        if clubs_list == []:
+            flash('Utilisateur non reconnu')
+            return render_template('index.html')
 
     @app.route('/book/<competition>/<club>')
     def book(competition, club):
@@ -71,3 +81,4 @@ app = create_app({"TESTING": False})
 
 if __name__ == "__main__":
     app.run()
+
