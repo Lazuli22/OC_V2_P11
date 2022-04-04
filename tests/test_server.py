@@ -70,12 +70,11 @@ def test_correct_points_allowed_per_clubs(client, club_user, compet):
     place = "15"
     response = client.post(
                 '/purchase_places',
-                data={'club': club_user['name'], 'competition': compet['name'], 'places': place}
+                data={
+                    'club': club_user['name'],
+                    'competition': compet['name'],
+                    'points': club_user['points'],
+                    'places': place}
             )
-    print(response)
     assert response.status_code == 200
-    assert b'Ce club n\'a pas assez de points pour reserver' in response.data
-    
-
-
-    
+    assert b'Ce club n a pas assez de points pour reserver' in response.data
