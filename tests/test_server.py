@@ -1,3 +1,4 @@
+from http.client import ResponseNotReady
 import pytest
 from server import app
 
@@ -78,3 +79,25 @@ def test_correct_points_allowed_per_clubs(client, club_user, compet):
             )
     assert response.status_code == 200
     assert b'Ce club n a pas assez de points pour reserver' in response.data
+
+
+# Définition d'un 2nd test pour le bug n°2
+def test_update_points(client, compet, club_user):
+    """
+    GIVEN a club authentified
+    WHEN club books a number of places for a competition
+    THEN check the booking subtracts the number of places on user's points
+    """
+    place = "10"
+    initial_points = int(club_user["points"])
+    print(initial_points)
+    response = client.post(
+                '/purchase_places',
+                data={
+                    'club': club_user['name'],
+                    'competition': compet['name'],
+                    'points': club_user['points'],
+                    'places': place}
+            )
+    assert response.status_code == 200
+    assert b'Points available: 3' in response.data

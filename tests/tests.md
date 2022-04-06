@@ -14,7 +14,7 @@
     * test_server.test_correct_points_allowed_per_clubs: ce test doit vérifier qu'un club 
     ne peut pas réserver plus de points qu'il lui est permis
 
-    * test_server.test_update_points : ce test doit vérifier que la mise des points d'un club
+    * test_server.test_update_points : ce test doit vérifier  la mise à jour des points d'un club
     après une reservation.
 
 3. Tests autour de la gestion des réservations par compétitions : 
