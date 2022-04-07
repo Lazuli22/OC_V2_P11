@@ -67,12 +67,15 @@ def purchase_places():
     pt_allow = int(request.form['points'])
     pl_req = int(request.form['places'])
     if pl_req <= pt_allow:
+        if pl_req > 12:
+            flash('You can t book over 12 points')
+            pl_req = 12
         competition['number_of_places'] = int(competition[
             'number_of_places'])-pl_req
         flash('Great-booking complete!')
         club['points'] = pt_allow-pl_req
     else:
-        flash('Ce club n a pas assez de points pour reserver')
+        flash('this club doesn t have enought points for booking')
     return render_template(
        'welcome.html', club=club, competitions=competitions)
 
