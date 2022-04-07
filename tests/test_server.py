@@ -77,7 +77,7 @@ def test_correct_points_allowed_per_clubs(client, club_user, compet):
                     'places': place}
             )
     assert response.status_code == 200
-    assert b'Ce club n a pas assez de points pour reserver' in response.data
+    assert b'this club doesn t have enought points for booking' in response.data
 
 
 # Définition d'un 2nd test pour le bug n°2
