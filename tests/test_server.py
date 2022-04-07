@@ -46,7 +46,6 @@ def test_valid_credentials(client):
     THEN check a page  with valid message
     """
     response = client.post('/show_summary', data={'email': 'john@simplylift.co'})
-    print(response)
     assert response.status_code == 200
     assert b"Welcome, john@simplylift.co" in response.data
 
@@ -101,3 +100,25 @@ def test_update_points(client, compet, club_user):
             )
     assert response.status_code == 200
     assert b'Points available: 3' in response.data
+
+
+def test_books_limited_12points(client, compet, club_user):
+    """
+    GIVEN a club authentified
+    WHEN club books a number of places for a competition
+    THEN check  the number of booked places is under 12 
+    """
+    place = "13"
+    initial_points = int(club_user["points"])
+    print(initial_points)
+    response = client.post(
+                '/purchase_places',
+                data={
+                    'club': club_user['name'],
+                    'competition': compet['name'],
+                    'points': club_user['points'],
+                    'places': place}
+            )
+    assert response.status_code == 200
+    assert b'You can t book over 12 points' in response.data
+ 
