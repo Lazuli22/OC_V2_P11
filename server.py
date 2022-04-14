@@ -1,7 +1,7 @@
 import json
 from flask import Flask, render_template, request, redirect, flash, url_for
 
-
+# Je viens renforcer les tests avec des vérifications dans le model.+
 def load_clubs():
     with open('clubs.json') as c:
         list_of_clubs = json.load(c)['clubs']
@@ -30,7 +30,7 @@ def index():
 def show_summary():
     """ function that permits the authentification of a user"""
     if request.form['email'] == "":
-        flash("Email vide, veuillez ressaisir un email")
+        flash("Empty Email, please try again")
         return render_template('index.html')
     clubs_list = []
     for club in clubs:
@@ -41,7 +41,7 @@ def show_summary():
                 club=club,
                 competitions=competitions)
     if clubs_list == []:
-        flash('Utilisateur non reconnu')
+        flash('Unknown user')
         return render_template('index.html')
 
 

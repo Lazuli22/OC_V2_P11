@@ -1,4 +1,6 @@
-
+"""
+Units tests for the server.py file
+"""
 
 
 def test_login_user_invalid_credentials(client):
@@ -9,7 +11,8 @@ def test_login_user_invalid_credentials(client):
     """
     response = client.post('/show_summary', data={'email': 'abc@gmail.com'})
     assert response.status_code == 200
-    assert b"Utilisateur non reconnu" in response.data
+    assert b"Welcome to the GUDLFT" in response.data
+    assert b"Unknown user" in response.data
 
 
 def test_valid_credentials(client):
@@ -21,6 +24,7 @@ def test_valid_credentials(client):
     response = client.post('/show_summary', data={'email': 'john@simplylift.co'})
     assert response.status_code == 200
     assert b"Welcome, john@simplylift.co" in response.data
+    assert b'Logout' in response.data
 
 
 def test_empty_credentials(client):
@@ -31,7 +35,8 @@ def test_empty_credentials(client):
     """
     response = client.post('/show_summary', data={'email': ''})
     assert response.status_code == 200
-    assert b"Email vide" in response.data
+    assert b"Welcome to the GUDLFT" in response.data
+    assert b"Empty Email" in response.data
 
 
 def test_correct_points_allowed_per_clubs(client, club_user, compet):
@@ -50,10 +55,11 @@ def test_correct_points_allowed_per_clubs(client, club_user, compet):
                     'places': place}
             )
     assert response.status_code == 200
+    assert b"Welcome, john@simplylift.co" in response.data
     assert b'this club doesn t have enought points for booking' in response.data
+    assert b'Logout' in response.data
 
 
-# Définition d'un 2nd test pour le bug n°2
 def test_update_points(client, compet, club_user):
     """
     GIVEN a club authentified
@@ -72,14 +78,16 @@ def test_update_points(client, compet, club_user):
                     'places': place}
             )
     assert response.status_code == 200
+    assert b"Welcome, john@simplylift.co" in response.data
     assert b'Points available: 3' in response.data
+    assert b'Logout' in response.data
 
 
 def test_books_limited_12points(client, compet, club_user):
     """
     GIVEN a club authentified
     WHEN club books a number of places for a competition
-    THEN check  the number of booked places is under 12 
+    THEN check  the number of booked places is under 12
     """
     place = "13"
     initial_points = int(club_user["points"])
@@ -94,4 +102,8 @@ def test_books_limited_12points(client, compet, club_user):
             )
     assert response.status_code == 200
     assert b'You can t book over 12 points' in response.data
- 
+    assert b'Points available: 1' in response.data
+    assert b'Great-booking complete!' in response.data
+    assert b'you have not enought points for booking' not in response.data
+    assert b'Logout' in response.data
+    
