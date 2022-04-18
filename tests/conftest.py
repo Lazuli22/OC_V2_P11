@@ -24,3 +24,12 @@ def compet():
             "date": "2020-03-27 10:00:00",
             "number_of_places": "25"}
     return comp
+
+
+@pytest.fixture
+def past_compet():
+    comp = {
+            "name": "Fall Classic",
+            "date": "2020-10-22 13:30:00",
+            "number_of_places": "13"}
+    return comp
