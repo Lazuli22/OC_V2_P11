@@ -1,7 +1,8 @@
 import json
+from datetime import datetime
 from flask import Flask, render_template, request, redirect, flash, url_for
 
-# Je viens renforcer les tests avec des vérifications dans le model.+
+
 def load_clubs():
     with open('clubs.json') as c:
         list_of_clubs = json.load(c)['clubs']
@@ -47,11 +48,22 @@ def show_summary():
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
+    the_actual_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     found_club = [c for c in clubs if c['name'] == club][0]
     found_competition = [c for c in competitions if c['name'] == competition][0]
     if found_club and found_competition:
-        return render_template(
-            'booking.html', club=found_club, competition=found_competition)
+        if found_competition["date"] < the_actual_date:
+            flash("You can t book a past competition")
+            return render_template(
+                'welcome.html',
+                club=found_club,
+                competitions=competitions)
+        else:
+            return render_template(
+                'booking.html',
+                club=found_club,
+                competition=found_competition,
+                )
     else:
         flash("Something went wrong-please try again")
         return render_template(
@@ -88,4 +100,3 @@ def logout():
 
 if __name__ == "__main__":
     app.run()
-
