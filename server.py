@@ -85,7 +85,7 @@ def purchase_places():
         competition['number_of_places'] = int(competition[
             'number_of_places'])-pl_req
         flash('Great-booking complete!')
-        club['points'] = pt_allow-pl_req
+        #club['points'] = pt_allow-pl_req
     else:
         flash('this club doesn t have enought points for booking')
     return render_template(
