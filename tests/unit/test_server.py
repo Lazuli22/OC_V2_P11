@@ -2,7 +2,6 @@
 Units tests for the server.py file
 """
 
-from time import strftime
 from datetime import datetime
 
 
@@ -64,27 +63,6 @@ def test_correct_points_allowed_per_clubs(client, club_user, compet):
     assert b"Welcome, john@simplylift.co" in res.data
     assert b'this club doesn t have enought points for booking' in res.data
     assert b'Logout' in res.data
-
-
-def test_update_points(client, compet, club_user):
-    """
-    GIVEN a club authentified
-    WHEN club books a number of places for a competition
-    THEN check the booking subtracts the number of places on user's points
-    """
-    place = "10"
-    response = client.post(
-                '/purchase_places',
-                data={
-                    'club': club_user['name'],
-                    'competition': compet['name'],
-                    'points': club_user['points'],
-                    'places': place}
-            )
-    assert response.status_code == 200
-    assert b"Welcome, john@simplylift.co" in response.data
-    assert b'Points available: 3' in response.data
-    assert b'Logout' in response.data
 
 
 def test_books_limited_12points(client, compet, club_user):
@@ -152,3 +130,24 @@ def test_booking_current_competitions(client, compet, club_user):
     assert compet['date'] > the_actual_date
     assert b'Places available' in response.data
     assert b'How many places?' in response.data
+
+
+def test_update_points(client, compet, club_user):
+    """
+    GIVEN a club authentified
+    WHEN club books a number of places for a competition
+    THEN check the booking subtracts the number of places on user's points
+    """
+    place = "10"
+    response = client.post(
+                '/purchase_places',
+                data={
+                    'club': club_user['name'],
+                    'competition': compet['name'],
+                    'points': club_user['points'],
+                    'places': place}
+            )
+    assert response.status_code == 200
+    assert b"Welcome, john@simplylift.co" in response.data
+    assert b'Points available: 3' in response.data
+    assert b'Logout' in response.data
