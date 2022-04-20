@@ -130,3 +130,25 @@ def test_booking_past_competitions(client, past_compet, club_user):
     assert past_compet['date'] < the_actual_date
     assert b'You can t book a past competition' in response.data
     assert b'Logout' in response.data
+
+
+def test_booking_current_competitions(client, compet, club_user):
+    """
+    GIVEN a club authentified, John Simplylift
+    WHEN club books  places for a current competition, Spring Festival
+    THEN check the booking can be done for this competition.
+    """
+    response = client.get(
+                '/book/Spring Festival/Simply Lift',
+                data={
+                    'club': club_user['name'],
+                    'competition': compet['name'],
+                    'points': club_user['points'],
+                    }
+            )
+    the_actual_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    assert response.status_code == 200
+    assert b"Spring Festival" in response.data
+    assert compet['date'] > the_actual_date
+    assert b'Places available' in response.data
+    assert b'How many places?' in response.data

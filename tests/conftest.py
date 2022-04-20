@@ -21,7 +21,7 @@ def club_user():
 def compet():
     comp = {
             "name": "Spring Festival",
-            "date": "2020-03-27 10:00:00",
+            "date": "2022-10-27 10:00:00",
             "number_of_places": "25"}
     return comp
 

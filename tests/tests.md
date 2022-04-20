@@ -22,8 +22,9 @@
     peut au plus réserver 12 points par compétitions.
 
 4. Tests autour de la gestion des competitions 
-    * test_server.test_booking_current_competitions : ce test doit vérifier que la réservation de points doit être possible sur  une compétition en cours.
-
+    * test_server.test_booking_past_competitions : ce test doit vérifier que la réservation de points ne doit pas être possible sur des compétitions anciennes.
+    * test_server.test_booking_current_competitions : ce test doit vérifier que la réservation de points doit être possible sur des compétitions courantes.
+    
 5. Tests autour d'un tableau de bord
 
     * test_server.test_global_view_clubs : ce test doit vérifier l'affichage correct du tableau 
