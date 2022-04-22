@@ -134,9 +134,9 @@ def test_booking_current_competitions(client, compet, club_user):
 
 def test_update_points(client, compet, club_user):
     """
-    GIVEN a club authentified
-    WHEN club books a number of places for a competition
-    THEN check the booking subtracts the number of places on user's points
+    GIVEN a club authentified, John Simplylift
+    WHEN the club books places for a current competition
+    THEN check the club's points is updated 
     """
     place = "10"
     response = client.post(
@@ -151,3 +151,16 @@ def test_update_points(client, compet, club_user):
     assert b"Welcome, john@simplylift.co" in response.data
     assert b'Points available: 3' in response.data
     assert b'Logout' in response.data
+
+
+def test_global_view_clubs(client, club_user):
+    """
+    GIVEN a flask application configured for testing
+    WHEN a club is authentified
+    THEN check the welcome page contains a points display board.
+    """
+    response = client.get('/show_clubs_board')
+    assert response.status_code == 200
+    assert b"Simply Lift" in response.data
+    assert b'john@simplylift.co' in response.data
+    assert b'13' in response.data
