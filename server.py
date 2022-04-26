@@ -24,8 +24,12 @@ app.secret_key = 'something_special'
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('points_board.html', clubs=clubs)
 
+
+@app.route('/authen')
+def authen():
+    return render_template('index.html')
 
 @app.route('/show_summary', methods=['POST'])
 def show_summary():

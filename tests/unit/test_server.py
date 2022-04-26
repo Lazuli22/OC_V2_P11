@@ -5,6 +5,25 @@ Units tests for the server.py file
 from datetime import datetime
 
 
+def test_global_view_clubs(client):
+    """
+    GIVEN a flask application configured for testing
+    WHEN the page 'index.html' is requested
+    THEN check the welcome page contains a points display board.
+    """
+    response = client.get('/')
+    assert response.status_code == 200
+    assert b'Simply Lift' in response.data
+    assert b'john@simplylift.co' in response.data
+    assert b'13' in response.data
+    assert b'Iron Temple' in response.data
+    assert b'admin@irontemple.com' in response.data
+    assert b'4' in response.data
+    assert b'She Lifts' in response.data
+    assert b'kate@shelifts.co.uk' in response.data
+    assert b'12' in response.data
+
+
 def test_login_user_invalid_credentials(client):
     """
     GIVEN a flask application configured for testing
@@ -134,9 +153,9 @@ def test_booking_current_competitions(client, compet, club_user):
 
 def test_update_points(client, compet, club_user):
     """
-    GIVEN a club authentified
-    WHEN club books a number of places for a competition
-    THEN check the booking subtracts the number of places on user's points
+    GIVEN a club authentified, John Simplylift
+    WHEN the club books places for a current competition
+    THEN check the club's points is updated
     """
     place = "10"
     response = client.post(
