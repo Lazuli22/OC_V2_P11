@@ -1,0 +1,24 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUDLFT Registration</title>
+</head>
+
+<body>
+    <h1>Welcome to the GUDLFT Registration Portal!</h1>
+    <h3>Clubs:</h3>
+    <ul>
+        {% for club in clubs%}
+        <li>
+            <div>Name: {{club['name']}} </div>
+            <div>Email: {{club['email']}}</div>
+            <div>Points: {{club['points']}}</div>
+            <div>
+                <a href="{{ url_for('authen')}}">reservation page </a>
+            </div>
+        </li>
+        <hr /> {% endfor %}
+    </ul>
+</body>
+
+</html>
