@@ -1,4 +1,4 @@
-# Plan de tests pour l'application GUDLFT Registration Portal
+# Plan de tests unitaires pour l'application GUDLFT Registration Portal
 
 1. Tests autour de l'authentification d'un utilisateur:
     * test_server.test_invalid_credentials: ce test doit démontrer qu'une connexion avec des identifiants erronées
@@ -29,3 +29,20 @@
 
     * test_server.test_global_view_clubs : ce test doit vérifier l'affichage correct du tableau 
     récapitulatif des clubs avec leur points associés
+
+# Plan de tests d'intégration pour l'application GUDLFT Registration Portal
+
+1. Tests autour du login d'un utilisateur:
+
+    * test_int_server.test_login_route: ce test doit démontrer qu'un utilisateur avec des crédentials valides peut bien
+    s'authentifier et accéder à la réservation de clubs, peut se déconnecter et revenir sur le tableau de bord
+    des clubs.
+    
+2. Tests de réservation de places par un utilisateur :
+    * test_int_server.test_booking_route : ce test doit démontrer qu'un utilisateur authentifié peut réserver des places (10) d'une compétition courante (une compétition à venir). Il vérifie aussi que ce nombre de places est déduit du comptes des places de 
+    de l'utilisateur et du nombre de places disponibles pour la compétition.
+
+    * test_int_server.test_limite_booking_route : ce test doit démontrer qu'un utilisateur authentifié ne peut réserver au déla de 12 places d'une compétition courante.Il vérifie que le nombre de places de l'utilisateur et le nombre de places de la compétition restent inchangés.
+
+
+    

@@ -15,13 +15,13 @@ def test_global_view_clubs(client):
     assert response.status_code == 200
     assert b'Simply Lift' in response.data
     assert b'john@simplylift.co' in response.data
-    assert b'13' in response.data
+    assert b'1' in response.data
     assert b'Iron Temple' in response.data
     assert b'admin@irontemple.com' in response.data
     assert b'4' in response.data
     assert b'She Lifts' in response.data
     assert b'kate@shelifts.co.uk' in response.data
-    assert b'12' in response.data
+    assert b'2' in response.data
 
 
 def test_login_user_invalid_credentials(client):

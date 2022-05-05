@@ -16,6 +16,13 @@ def club_user():
         "points": "13"}
     return cl
 
+@pytest.fixture
+def club_user_2():
+    cl = {
+        "name": "She Lifts",
+        "email": "kate@shelifts.co.uk",
+        "points": "12"}
+    return cl
 
 @pytest.fixture
 def compet():
