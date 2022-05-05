@@ -42,7 +42,7 @@
     * test_int_server.test_booking_route : ce test doit démontrer qu'un utilisateur authentifié peut réserver des places (10) d'une compétition courante (une compétition à venir). Il vérifie aussi que ce nombre de places est déduit du comptes des places de 
     de l'utilisateur et du nombre de places disponibles pour la compétition.
 
-    * test_int_limite_booking_route : ce test doit démontrer qu'un utilisateur authentifié ne peut réserver au déla de 12 places d'une compétition courante.Il vérifie que le nombre de places de l'utilisateur et le nombre de places de la compétition restent inchangés.
+    * test_int_server.test_limite_booking_route : ce test doit démontrer qu'un utilisateur authentifié ne peut réserver au déla de 12 places d'une compétition courante.Il vérifie que le nombre de places de l'utilisateur et le nombre de places de la compétition restent inchangés.
 
 
     
