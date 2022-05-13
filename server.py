@@ -31,6 +31,7 @@ def index():
 def authen():
     return render_template('index.html')
 
+
 @app.route('/show_summary', methods=['POST'])
 def show_summary():
     """ function that permits the authentification of a user"""
@@ -54,7 +55,8 @@ def show_summary():
 def book(competition, club):
     the_actual_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     found_club = [c for c in clubs if c['name'] == club][0]
-    found_competition = [c for c in competitions if c['name'] == competition][0]
+    found_competition = [
+        c for c in competitions if c['name'] == competition][0]
     if found_club and found_competition:
         if found_competition["date"] < the_actual_date:
             flash("You can t book a past competition")
