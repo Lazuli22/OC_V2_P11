@@ -1,12 +1,52 @@
 import pytest
+import server
 from server import app
 
 
+@pytest.fixture()
+def list_compet():
+    competitions = [{
+            "name": "Spring Festival",
+            "date": "2022-10-27 10:00:00",
+            "number_of_places": "25"
+        },
+        {
+            "name": "Fall Classic",
+            "date": "2010-10-22 13:30:00",
+            "number_of_places": "13"
+        }
+    ]
+    return competitions
+
+
+@pytest.fixture()
+def list_club():
+    clubs = [
+            {
+                "name": "Simply Lift",
+                "email": "john@simplylift.co",
+                "points": "13"
+            },
+            {
+                "name": "Iron Temple",
+                "email": "admin@irontemple.com",
+                "points": "4"
+            },
+            {
+                "name": "She Lifts",
+                "email": "kate@shelifts.co.uk",
+                "points": "12"
+            }
+        ]
+    return clubs
+
+
 @pytest.fixture
-def client():
+def client(monkeypatch, list_club, list_compet):
+    monkeypatch.setattr(server, 'clubs', list_club)
+    monkeypatch.setattr(server, 'competitions', list_compet)
     with app.test_client() as client:
         yield client
-
 
 @pytest.fixture
 def club_user():
@@ -24,6 +64,7 @@ def club_user_2():
         "points": "12"}
     return cl
 
+
 @pytest.fixture
 def compet():
     comp = {
@@ -40,3 +81,4 @@ def past_compet():
             "date": "2020-10-22 13:30:00",
             "number_of_places": "13"}
     return comp
+
