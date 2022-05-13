@@ -12,7 +12,7 @@ class TestsUnitServer:
         GIVEN a flask application configured for testing
         WHEN the page 'index.html' is requested
         THEN check the welcome page contains a points display board.
-        """  
+        """
         response = client.get('/')
         assert response.status_code == 200
         assert b'Simply Lift' in response.data
@@ -31,7 +31,8 @@ class TestsUnitServer:
         WHEN the page '/show_summary' is posted (POST) with invalid credentials
         THEN check the same page  with a wrong message
         """
-        response = client.post('/show_summary', data={'email': 'abc@gmail.com'})
+        response = client.post(
+            '/show_summary', data={'email': 'abc@gmail.com'})
         assert response.status_code == 200
         assert b"Welcome to the GUDLFT" in response.data
         assert b"Unknown user" in response.data
@@ -39,7 +40,8 @@ class TestsUnitServer:
     def test_valid_credentials(self, client):
         """
         GIVEN a flask application configured for testing
-        WHEN the page '/show_summary' is requested (POST) with valid credentials
+        WHEN the page '/show_summary' is requested (POST)
+        with valid credentials
         THEN check a page  with valid message
         """
         response = client.post(
@@ -53,7 +55,8 @@ class TestsUnitServer:
     def test_empty_credentials(self, client):
         """
         GIVEN a flask application configured for testing
-        WHEN the page '/show_summary' is requested (POST) with empty credentials
+        WHEN the page '/show_summary' is requested (POST) 
+        with empty credentials
         THEN check the same page  with a warning message
         """
         response = client.post('/show_summary', data={'email': ''})

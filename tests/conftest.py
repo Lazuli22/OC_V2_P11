@@ -48,6 +48,7 @@ def client(monkeypatch, list_club, list_compet):
     with app.test_client() as client:
         yield client
 
+
 @pytest.fixture
 def club_user():
     cl = {
@@ -55,6 +56,7 @@ def club_user():
         "email": "john@simplylift.co",
         "points": "13"}
     return cl
+
 
 @pytest.fixture
 def club_user_2():
@@ -81,4 +83,3 @@ def past_compet():
             "date": "2020-10-22 13:30:00",
             "number_of_places": "13"}
     return comp
-
