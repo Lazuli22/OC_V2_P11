@@ -4,12 +4,14 @@ from flask import Flask, render_template, request, redirect, flash, url_for
 
 
 def load_clubs():
+    """ load initial clubs list"""
     with open('clubs.json') as c:
         list_of_clubs = json.load(c)['clubs']
         return list_of_clubs
 
 
 def load_competitions():
+    """ load initial competition list """
     with open('competitions.json') as comps:
         list_of_competitions = json.load(comps)['competitions']
         return list_of_competitions
@@ -24,15 +26,17 @@ app.secret_key = 'something_special'
 
 @app.route('/')
 def index():
+    """ first page """
     return render_template('points_board.html', clubs=clubs)
 
 
 @app.route('/authen')
 def authen():
+    """ login page """
     return render_template('index.html')
 
 
-@app.route('/show_summary', methods=['POST'])
+@app.route('/show_summary', methods=['POST']) 
 def show_summary():
     """ function that permits the authentification of a user"""
     if request.form['email'] == "":
@@ -53,6 +57,7 @@ def show_summary():
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
+    """ function that permits  to book places of a competitions """
     the_actual_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     found_club = [c for c in clubs if c['name'] == club][0]
     found_competition = [
@@ -78,6 +83,7 @@ def book(competition, club):
 
 @app.route('/purchase_places', methods=['POST'])
 def purchase_places():
+    """ function that permits to purchase places of a competitions """
     competition = [
         c for c in competitions if c['name'] == request.form['competition']][0]
     club = [
@@ -91,7 +97,7 @@ def purchase_places():
         competition['number_of_places'] = int(competition[
             'number_of_places'])-pl_req
         flash('Great-booking complete!')
-        club['points'] = pt_allow-pl_req
+        club['points'] = pt_allow-(3*pl_req)
     else:
         flash('this club doesn t have enought points for booking')
     return render_template(
