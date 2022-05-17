@@ -1,5 +1,4 @@
-from urllib import response
-from locust import HttpUser, task, between
+from locust import HttpUser, task
 
 
 class ProjectPerfTest(HttpUser):
@@ -7,21 +6,26 @@ class ProjectPerfTest(HttpUser):
     @task
     def home(self):
         self.client.get("/")
-
+        
     @task()
     def competitions_page(self):
-        self.client.post(
+        with self.client.post(
             "http://127.0.0.1:5000/show_summary",
-            {"email": "john@simplylift.co"}, catch_response=True) 
-            as response: 
-                if not b"Welcome to the GUDLFT" in response.data
-                    response.failure("email invalide!")
+            {"email": "john@simplylift.co"}, catch_response=True
+        ) as response:
+            if b"Welcome, john@simplylift.co" not in response.content:
+                response.failure(" invalide email!")
+            elif response.elapsed.total_seconds() > 5:
+                response.failure("Request takes too long")
 
     @task()
-    def book_competition_page(self, club_user_2, compet):
-        between(5, 9)
-        self.client.post(
+    def book_competition_page(self):
+        with self.client.post(
             'http://127.0.0.1:5000/purchase_places',
-            {"club": club_user_2['name'], 'competition': compet['name'],
-                'points': club_user_2['points'], 'places': 10}
-        )
+            {"club": 'She Lifts', 'competition': 'Spring Festival',
+                'points': '12', 'places': 10},
+                catch_response=True
+        ) as response:
+            if response.elapsed.total_seconds() > 2:
+                response.failure("Request takes too long")
+
