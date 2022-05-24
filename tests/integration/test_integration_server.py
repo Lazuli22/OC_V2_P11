@@ -32,8 +32,8 @@ class TestsIntegration:
             )
         assert res.status_code == 200
         assert b'Welcome, kate@shelifts.co.uk' in res.data
-        assert b'Points available: 2' in res.data
-        assert b'Number of Places: 15' in res.data
+        assert b'Points available: 0' in res.data
+        assert b'Number of Places: 21' in res.data
 
     def test_limite_booking_route(self, client, club_user, compet):
         my_data = {
@@ -49,5 +49,5 @@ class TestsIntegration:
         assert res.status_code == 200
         assert b'Welcome, john@simplylift.co' in res.data
         assert b'You can t book over 12 points' in res.data
-        assert b'Points available: 1' in res.data
-        assert b'Number of Places: 13' in res.data
+        assert b'Points available: 0' in res.data
+        assert b'Number of Places: 20' in res.data
