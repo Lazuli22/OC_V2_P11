@@ -101,7 +101,7 @@ class TestsUnitServer:
                 )
         assert response.status_code == 200
         assert b'You can t book over 12 points' in response.data
-        assert b'Points available: 1' in response.data
+        assert b'Points available: 0' in response.data
         assert b'Great-booking complete!' in response.data
         assert b'you have not enought points for booking' not in response.data
         assert b'Logout' in response.data
@@ -165,5 +165,5 @@ class TestsUnitServer:
                 )
         assert response.status_code == 200
         assert b"Welcome, john@simplylift.co" in response.data
-        assert b'Points available: 3' in response.data
+        assert b'Points available: 0' in response.data
         assert b'Logout' in response.data
